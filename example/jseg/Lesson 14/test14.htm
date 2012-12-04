@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Lesson 14 Example 1</title>
+</head>
+<body>
+    <script type="text/javascript">
+	var favouriteNum1 = prompt("Please provide your first favourite number: ", "Number1");
+	var favouriteNum2 = prompt("Please provide your second favourite number: ", "Number2");
+	var favouriteNum3 = prompt("Please provide your third favourite number: ", "Number3");
+
+
+        var favouriteNumbers = [
+            favouriteNum1,
+            favouriteNum2,
+            favouriteNum3
+        ];
+
+        var ul = document.createElement("ul");
+        
+        for (var i = 0; i < favouriteNumbers.length; i++) {
+            ul.innerHTML = ul.innerHTML + "<li>" + favouriteNumbers[i] + "</li>";
+        }
+
+        document.body.appendChild(ul);
+    </script>
+</body>
+</html>

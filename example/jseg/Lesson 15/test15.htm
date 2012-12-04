@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Lesson 15: Example 1</title>
+    <style type="text/css">
+    .message-style1 {
+        color: navy;
+        font-weight: bold;
+        background-color: gray;	
+    }
+    </style>
+</head>
+<body>	
+    <div id="divMessage">
+        Here is a message.
+    </div>    
+    <script type="text/javascript">
+    
+    var myMoney = prompt("Money you have: ", "Money");
+    var spentMoney = prompt("Money you spent: ", "Money Spent");
+    var finalSum = Number(myMoney) - Number(spentMoney);
+    var ul = document.createElement("ul");    
+    ul.innerHTML = finalSum;
+    ul.id = "sumID";
+	document.body.appendChild(ul);
+	if(finalSum >= 0) {		
+		var sumID = document.getElementById("sumID");						sumID.className = "message-style1";
+	}
+	
+    // var divMessage = document.getElementById("divMessage");
+    // if (divMessage.className === "message-style1") {
+        // divMessage.className = "";
+    // } else {
+        // divMessage.className = "message-style1";
+    // }
+    
+    
+    </script>
+</body>
+</html>

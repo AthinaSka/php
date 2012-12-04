@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Sample Page</title>
+</head>
+<body>
+    <p id="someText">This is some text.</p>
+    <p id="moreText">This is more text.</p>
+    <p>Here is text with a <span id="foo">span element</span>.</p>
+    <script type="text/javascript">
+        // var theSpan = document.getElementById("foo");
+ 
+        // theSpan.childNodes[0].nodeValue = "span element containing new text";
+        
+        var display = document.getElementById("moreText");
+        //alert(display);
+        alert(display.childNodes[0].nodeValue);
+    </script>
+</body>
+</html>

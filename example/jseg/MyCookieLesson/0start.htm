@@ -1,0 +1,180 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Lesson 29: Example 01</title>
+    
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <style type="text/css">
+    .errorStyle {
+        color: red;
+        text-decoration: underline;	
+    }
+    </style>
+</head>
+<body onload="prepareData()">
+<form name="theForm" action="" onsubmit="extendedValidateForm(event)">
+    <p>
+        Name: <input type="text" name="txtName" /> Not Null Value Must be Inserted <div style = "errorStyle" id="txtNameError"></div>
+    </p>
+    <p>
+        Age: <input type="text" name="txtAge" /> Must contain an integer value<div style = "errorStyle" id="txtAgeError"></div>
+    </p>
+    <p>
+        Email: <input type="text" name="txtEmail" /> Must contain at least one @ character
+    </p>
+    <p>
+        Password: <input type="password" name="txtPassword1" /> Δεν μπορεί να είναι κενό
+    </p>
+    <p>
+        Retype Password: <input type="password" name="txtPassword2" /> Πρέπει να είναι  προηγούμενο που έδωσε ο χρήστης
+    </p>
+    <p>
+    	Your Favourite Day: <select id="dayOfTheWeek" name="dayOfTheWeek" ></select> Θα γεμίσω τη λίστα επιλογών με javascript
+    </p>
+
+    <input name="btnSubmit" type="submit" value="Submit" />
+</form>
+<script type="text/javascript" src="eventutility.js"></script>
+<script type="text/javascript">
+
+function prepareData(){
+	populateDays()
+	var storedUserName=getCookie("username");
+  	if (storedUserName!=null && storedUserName!=""){
+  		alert("I konow you you are "+storedUserName);
+  		document.theForm.txtName.value = storedUserName;
+  	}
+}
+
+function populateDays() {
+    var days = [ "Sunday", "Monday", "Tuesday", "Wednesday",
+        "Thursday", "Friday", "Saturday" ];
+
+    var dayOfWeek = document.getElementById("dayOfTheWeek");
+
+    for (var i = 0; i < days.length; i++) {
+        var length = dayOfWeek.options.length; // add at the end
+
+        dayOfWeek.add(new Option(days[i], i), length); 
+        //selectObject.add(option,before) Required. Where to insert the new option 
+       //(null indicates that the new option will be inserted at the end of the list). 
+    }
+
+
+}
+
+
+
+function isEmpty(value) {
+    return (value === "");
+}
+
+
+function markAsError(element, errorMsg){
+		
+	var errorDivElement = document.getElementById(element.name+"Error");
+	//alert (element.name+"Error");	
+	if (errorDivElement.className !== "errorStyle"){
+	
+		errorDivElement.className = "errorStyle";
+		errorDivElement.innerHTML = errorMsg;
+	}
+	
+}
+
+function markAsCorrect(element){
+	
+	var errorDivElement = document.getElementById(element.name+"Error");	
+	
+	if (errorDivElement.className === "errorStyle"){	
+		errorDivElement.className = null;
+		errorDivElement.innerHTML = "";
+	}
+	
+}
+
+function extendedValidateForm(event) {
+	
+	
+
+    var theForm = document.theForm;
+    var txtName = theForm.txtName;
+    var txtAge = theForm.txtAge;
+    var txtEmail = theForm.txtEmail;
+    var txtPassword1 = theForm.txtPassword1;
+    var txtPassword2 = theForm.txtPassword2;
+    var button = theForm.btnSubmit;
+    var age = parseInt(txtAge.value);
+
+
+    button.disabled = true;
+    
+    var errorFound = false;
+
+    // valid name field
+    if (isEmpty(txtName.value)) {
+    	markAsError(txtName, "Please enter your name");
+    	errorFound = true;
+   	}
+   	else{
+   		markAsCorrect(txtName);
+   	}
+	// validate age
+    if (isNaN(age) && age <= 0) { 
+    	markAsError(txtAge, "Please enter your age");
+    	errorFound = true;	
+    }  	
+    else{
+   		markAsCorrect(txtAge);    
+    }
+
+ 
+    button.disabled = false;
+    alert(errorFound);
+    if (errorFound){
+    	eventUtility.preventDefault(event);
+    }
+    else{
+    	//Set the cookie
+    	setCookie("username",txtName.value,365);
+    }
+
+}
+
+function setCookie(cookieName,cookieValue,exprireDays){
+	var exdate=new Date();
+	exdate.setDate(exdate.getDate() + exprireDays);
+	// You need to escape the string in order to make it portable
+	//This function makes a string portable, so it can be transmitted across any network to any computer that supports ASCII characters.
+	var cookieValue=escape(cookieValue) + ((exprireDays==null) ? "" : "; expires="+exdate.toUTCString());
+	//alert("setting cokie "+cookieName + ":"+cookieValue);
+	document.cookie=cookieName + "=" + cookieValue;
+}
+
+function getCookie(cookieName)
+{
+	
+	alert(document.cookie);
+
+	var i,x,y,ARRcookies=document.cookie.split(";");
+	for (i=0;i<ARRcookies.length;i++)
+	{
+  		x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
+  		y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
+  		alert(x+":"+y);
+  		x=x.replace(/^\s+|\s+$/g,""); //trim the string using regularExpression
+  		if (x==cookieName){
+		    return unescape(y);
+    	}
+  	}
+}
+
+function eraseCookie(cookieName) {
+	createCookie(cookieName,"",-1);
+}
+
+</script>
+</body>
+</html>
